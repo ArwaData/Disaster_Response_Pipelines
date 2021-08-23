@@ -2,6 +2,7 @@
 
 
 # Introduction
+After a natural disaster, thousands of people send out messages to ask for help through various channels such as social media. Like that they need food; or they're trapped under rubble. However, the government does not have enough time to read all the messages and send them to various departments. Then, this project will play an important role and help people to be safe.<br>
 This Project is required as a part of the Data Science Nanodegree Program of Udacity in collaboration with appen. The initial dataset contains pre-labelled tweet and messages from real-life disaster situations. The aim of the project is to build a Natural Language Processing tool that categorize messages.
 
 ### The Project is divided in the following Sections:
@@ -12,12 +13,24 @@ This Project is required as a part of the Data Science Nanodegree Program of Uda
 
 # Files and folders
 
-- data: folder contains sample messages and categories datasets in csv format
-- app: contains the run.py to deploy the web app.
-- process_data.py: python code takes as input csv files(message data and message categories datasets), clean it, and then creates a SQL database
-- train_classifier.py: code to train the ML model with the SQL data base
-- ETL Pipeline Preparation.ipynb: process_data.py development process
-- ML Pipeline Preparation.ipynb: train_classifier.py development process
+- data: folder contains sample messages and categories datasets in csv format<br>
+|- disaster_categories.csv # data to process<br>
+|- disaster_messages.csv # data to process<br>
+|- process_data.py # python code takes as input csv files(message data and message categories datasets), clean it, and then creates a SQL database <br>
+|- InsertDatabaseName.db # database to save clean data to <br>
+- app: contains the run.py to deploy the web app.<br>
+| - template<br>
+| |- master.html # main page of web app<br>
+| |- go.html # classification result page of web app<br>
+|- run.py # Flask file that runs app<br>
+- models<br>
+|- train_classifier.py # code to train the ML model with the SQL data base<br>
+|- classifier.pkl # saved model<br>
+|- ETL Pipeline Preparation.ipynb: process_data.py development process<br>
+|- ML Pipeline Preparation.ipynb: train_classifier.py development process <br>
+- README.md<br>
+
+
 
 
 # Installation
