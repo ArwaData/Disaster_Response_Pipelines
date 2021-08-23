@@ -1,4 +1,6 @@
 import sys
+import pandas as pd
+from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
@@ -23,25 +25,27 @@ def clean_data(df):
     # rename the columns of `categories`
     categories.columns = category_colnames
     for column in categories:
-    # set each value to be the last character of the string
-    categories[column] = categories[column].str[-1]
-    
-    # convert column from string to numeric
-    categories[column] =  categories[column].astype(int) 
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str[-1]
+
+        # convert column from string to numeric
+        categories[column] =  categories[column].astype(int)
+   
     # drop the original categories column from `df`
     df = df.drop(columns=['categories'])
     # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat([df, categories], axis=1)
     # drop duplicates
+    df.related.replace(2,1,inplace=True)
     df=df.drop_duplicates()
+
     
     return df
 
 
 def save_data(df, database_filename):
-    engine = create_engine('sqlite:///InsertDatabaseName.db')
-    df.to_sql('InsertTableName', engine, index=False)  
-    pass
+    engine = create_engine('sqlite:///'+ str (database_filename))
+    df.to_sql('InsertTableName', engine, index=False, if_exists = 'replace')
 
 
 def main():
