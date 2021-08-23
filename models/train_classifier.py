@@ -44,7 +44,7 @@ def load_data(database_filepath):
     #cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     #print("********",cursor.fetchall())
         
-    df = pd.read_sql_query('SELECT * FROM disaster_data',engine)
+    df = pd.read_sql_query('SELECT * FROM InsertTableName',engine)
     X = df.message
     Y = df.loc[:,"related":"direct_report"]
     category_names = Y.columns
