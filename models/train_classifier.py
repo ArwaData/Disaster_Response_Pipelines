@@ -36,6 +36,18 @@ import sqlite3
 
 
 def load_data(database_filepath):
+     '''
+    Load data from a disaster.db which is a database file.
+ 
+    input:
+        Database file name and path 
+    Output:
+        X = Feature values (Text) 
+        Y = Target values as result of classification process
+        col_names = Target values (Y) column names 
+    '''
+
+
     # load data from database
     engine = create_engine('sqlite:///' + database_filepath)
     connection = engine.connect()
@@ -52,6 +64,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    
+    '''
+    Tokenize text messages and cleaning for Machine Learning use.
+    Input: string
+    Output: list
+    '''
+    
      # Normalize text
     text = text.lower() 
     text = re.sub(r"[^a-zA-Z0-9]", " ", text) 
@@ -79,6 +98,13 @@ def tokenize(text):
 
 
 def build_model():
+    
+    '''
+    Function specifies the pipeline and the grid search parameters to build a classification model by SKLEARN pipeline library 
+     
+    Output:  cv: classification model
+    '''
+    
     pipeline = Pipeline([
     ('vect', CountVectorizer(tokenizer=tokenize)),
     ('tfidf', TfidfTransformer()),
@@ -106,7 +132,10 @@ def build_model():
     
 def avg_accuracy(y_test, y_pred):
     
-    #This is the score_func used in make_scorer, which would be used in in GridSearchCV 
+    """
+        This is the score_func that would be used in GridSearchCV  method
+    """
+    
     
     avg_accuracy=accuracy_score(y_test.values.reshape(-1,1), y_pred.reshape(-1,1))
     
@@ -114,6 +143,20 @@ def avg_accuracy(y_test, y_pred):
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    
+     """
+    Evaluate model on the test data and print the result
+    input:
+        model  = trained model for evaluation
+        X_test = testing features (Unseen data)
+        Y_test = true values to compare with prediction on unseen test cases
+        category_names = column name of Y_test data
+    output:
+        print a panda dataframe that contains accuracy, precision, and recall, and f1 scores\
+        for each output category of the dataset
+    """
+        
+        
     y_pred = model.predict(X_test)
     
     for i,col in enumerate(category_names):
@@ -126,6 +169,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 def save_model(model, model_filepath):
     
+     """
+    Saving trained model on disk to be load when required.
+    input:
+        model = trained classifier
+        model_filepath = file path and name to store model on disk
+        
+    """
+        
     with open(model_filepath, 'wb') as file:
         pickle.dump(model, file)
     pass
