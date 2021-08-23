@@ -27,14 +27,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///data/DisasterResponse.db')
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
 #df = pd.read_sql_table('disaster_table', engine)
-df = pd.read_sql_query('SELECT * FROM disaster_data',engine)
+df = pd.read_sql_query('SELECT * FROM InsertTableName',engine)
 
-# load model
-#model = joblib.load("models/classifier.pkl")
-
-with open("models/classifier.pkl", "rb") as f:
+with open("../models/classifier.pkl", "rb") as f:
      model = pickle.load(f)
 
     
